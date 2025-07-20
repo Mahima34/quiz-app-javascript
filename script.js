@@ -85,12 +85,28 @@ let questionNumber = document.getElementById("question-number");
 let currentQuestionIndex = 0;
 let score = 0;
 
+function selectAnswer(e) {
+  const selectedBtn = e.target;
+  const isCorrect = selectedBtn.dataset.correct === "true";
+  if (isCorrect) {
+    selectedBtn.classList.add("correct");
+    score++;
+  } else {
+    selectedBtn.classList.add("incorrect");
+  }
+}
+
 function showOptions(currentQuestion) {
   currentQuestion.answers.forEach((answer) => {
     const button = document.createElement("button");
     button.innerText = answer.text;
     button.classList.add("btn");
     answerButtons.appendChild(button);
+
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
+    }
+    button.addEventListener("click", selectAnswer);
   });
 }
 

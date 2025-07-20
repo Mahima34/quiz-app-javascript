@@ -90,3 +90,11 @@ body {
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+.correct {
+  background-color: #66bb6a;
+  border: 1px solid #000;
+}
+.incorrect {
+  background-color: #ef5350;
+  border: 1px solid #000;
+}
