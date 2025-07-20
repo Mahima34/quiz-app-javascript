@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quiz App</title>
-   <link rel="stylesheet" href="style.css">
-</head>
-<body>
-   <div class="app">
-        
-   </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="header-box">
+        <div class="timer-box">
+          <span>Time Left</span>
+          <div class="timer">10</div>
+        </div>
+        <p id="question-number">Q.1 of 5</p>
+      </div>
+      <h1 id="question">What is the capital of India?</h1>
+      <div id="answer-buttons">
+        <button class="answer-button">New Delhi</button>
+        <button class="answer-button">Mumbai</button>
+        <button class="answer-button">Kolkata</button>
+        <button class="answer-button">Chennai</button>
+      </div>
+    </div>
 
-   <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
