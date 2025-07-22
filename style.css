@@ -95,7 +95,7 @@ body {
   color: #fff;
   background: linear-gradient(to right, #010101a8, #000000e5, #010101a8);
 }
-.btn:disabled{
+.btn:disabled {
   cursor: no-drop;
 }
 
@@ -106,4 +106,16 @@ body {
 .incorrect {
   background-color: #ef5350;
   border: 1px solid #000;
+}
+#playAgain {
+  color: #fff;
+  background: linear-gradient(to right, #000000da, #1a2524d8);
+  font: 40%;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 12px;
+  margin: 20px auto 0;
+  border-radius: 12px;
+  cursor: pointer;
+  display: none;
 }

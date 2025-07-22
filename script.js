@@ -44,53 +44,36 @@ const questions = [
       { text: "HTTP", correct: false },
     ],
   },
-  {
-    question: "Which method adds an element at the end of an array?",
-    answers: [
-      { text: "push()", correct: true },
-      { text: "pop()", correct: false },
-      { text: "shift()", correct: false },
-      { text: "unshift()", correct: false },
-    ],
-  },
-  {
-    question: " What will typeof null return?",
-    answers: [
-      { text: "null", correct: false },
-      { text: "object", correct: true },
-      { text: "undefined", correct: false },
-      { text: "string", correct: false },
-    ],
-  },
-  {
-    question: "Which symbol is used for comments in JavaScript?",
-    answers: [
-      { text: "//", correct: true },
-      { text: "<!--", correct: false },
-      { text: "/*", correct: false },
-      { text: "#", correct: false },
-    ],
-  },
 ];
 
 //step-2
-
 const timeEl = document.querySelector(".timer");
 const timeBar = document.getElementById("time-bar");
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
+const playAgainBtn = document.getElementById("playAgainBtn");
 
 let questionNumber = document.getElementById("question-number");
 
 let currentQuestionIndex = 0;
 let score = 0;
 timerInterval = null;
+isAnswered = false;
+
+function showAnswer() {
+  Array.from(answerButtons.children).forEach((button) => {
+    if (button.dataset.correct === "true") {
+      button.classList.add("correct");
+    }
+    button.disabled = true;
+  });
+}
 
 function startTimer() {
-  let timeLeft = 10;
-  const totalTime = 10;
+  let timeLeft = 1;
+  const totalTime = 1;
 
-  timerEl.innerHTML = timeLeft;
+  timeEl.innerHTML = timeLeft;
   timeBar.style.transition = "none";
   timeBar.style.width = "100%";
 
@@ -100,12 +83,17 @@ function startTimer() {
 
   setInterval(() => {
     timeLeft--;
-    timerEl.innerHTML = timeLeft;
+    timeEl.innerHTML = timeLeft;
 
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      timerEl.innerText = 0;
+      timeEl.innerText = 0;
       showNextQuestion();
+
+      if (!isAnswered) {
+        showAnswer();
+        setTimeout(showNextQuestion, 800);
+      }
     }
   }, 1000);
 }
@@ -125,6 +113,8 @@ function selectAnswer(e) {
     }
     button.disabled = true;
   });
+  isAnswered = true;
+  setTimeout(showNextQuestion, 1000);
 }
 
 function showOptions(currentQuestion) {
@@ -157,19 +147,33 @@ function showQuestion() {
   showOptions(currentQuestion);
 }
 
+function showScore() {
+  timerEl.style.visibility = "hidden";
+  timeBar.style.visibility = "hidden";
+  questionNumber.style.visibility = "hidden";
+  clearInterval(timerInterval);
+  resetState();
+  questionElement.innerHTML = `Score: ${score}`;
+  playAgainBtn.style.display = "block";
+}
+
 function showNextQuestion() {
   clearInterval(timerInterval);
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
     showQuestion();
+  } else {
+    showScore();
   }
   currentQuestionIndex++;
 }
 
 function startQuiz() {
+  playAgainBtn.style.display = "none";
   currentQuestionIndex = 0;
   score = 0;
   showNextQuestion();
 }
 
+playAgainBtn.addEventListener("click", startQuiz);
 startQuiz();
