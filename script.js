@@ -30,7 +30,7 @@ const questions = [
     question: "Which of these is a JavaScript framework?",
     answers: [
       { text: "React", correct: true },
-      { text: "Laravel", correct: false },
+      { text: "Larval", correct: false },
       { text: "Django", correct: false },
       { text: "Ruby on Rails", correct: false },
     ],
