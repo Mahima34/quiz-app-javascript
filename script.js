@@ -47,6 +47,7 @@ const questions = [
 ];
 
 //step-2
+const timerEl = document.getElementById("timer");
 const timeEl = document.querySelector(".timer");
 const timeBar = document.getElementById("time-bar");
 const questionElement = document.getElementById("question");
@@ -70,8 +71,8 @@ function showAnswer() {
 }
 
 function startTimer() {
-  let timeLeft = 1;
-  const totalTime = 1;
+  let timeLeft = 10;
+  const totalTime = 10;
 
   timeEl.innerHTML = timeLeft;
   timeBar.style.transition = "none";
@@ -170,6 +171,9 @@ function showNextQuestion() {
 
 function startQuiz() {
   playAgainBtn.style.display = "none";
+  timerEl.style.visibility = "visible";
+  timeBar.style.visibility = "visible";
+  questionNumber.style.visibility = "visible";
   currentQuestionIndex = 0;
   score = 0;
   showNextQuestion();
@@ -177,3 +181,13 @@ function startQuiz() {
 
 playAgainBtn.addEventListener("click", startQuiz);
 startQuiz();
+
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("startBtn");
+const quiz = document.querySelector(".app");
+
+startBtn.addEventListener("click", () => {
+  startScreen.style.display = "none";
+  quiz.style.display = "block";
+  startQuiz();
+});
