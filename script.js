@@ -37,7 +37,7 @@ const questions = [
   },
   {
     question: "Which of the following is used for version control?",
-    answer: [
+    answers: [
       { text: "Git", correct: true },
       { text: "FTP", correct: false },
       { text: "SSH", correct: false },
@@ -75,7 +75,7 @@ const questions = [
 
 //step-2
 
-const timeEl = document.getElementById("timer");
+const timeEl = document.querySelector(".timer");
 const timeBar = document.getElementById("time-bar");
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
@@ -84,6 +84,31 @@ let questionNumber = document.getElementById("question-number");
 
 let currentQuestionIndex = 0;
 let score = 0;
+timerInterval = null;
+
+function startTimer() {
+  let timeLeft = 10;
+  const totalTime = 10;
+
+  timerEl.innerHTML = timeLeft;
+  timeBar.style.transition = "none";
+  timeBar.style.width = "100%";
+
+  void timeBar.offsetWidth;
+  timeBar.style.transition = `width ${totalTime}s linear`;
+  timeBar.style.width = "0%";
+
+  setInterval(() => {
+    timeLeft--;
+    timerEl.innerHTML = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerEl.innerText = 0;
+      showNextQuestion();
+    }
+  }, 1000);
+}
 
 function selectAnswer(e) {
   const selectedBtn = e.target;
@@ -94,6 +119,12 @@ function selectAnswer(e) {
   } else {
     selectedBtn.classList.add("incorrect");
   }
+  Array.from(answerButtons.children).forEach((button) => {
+    if (button.dataset.correct === "true") {
+      button.classList.add("correct");
+    }
+    button.disabled = true;
+  });
 }
 
 function showOptions(currentQuestion) {
@@ -110,18 +141,35 @@ function showOptions(currentQuestion) {
   });
 }
 
+function resetState() {
+  while (answerButtons.firstChild) {
+    answerButtons.removeChild(answerButtons.firstChild);
+  }
+}
+
 function showQuestion() {
+  startTimer();
+  resetState();
   let currentQuestion = questions[currentQuestionIndex];
   let questionNo = currentQuestionIndex + 1;
   questionNumber.innerHTML = `Q.${questionNo} of ${questions.length}`;
   questionElement.innerText = currentQuestion.question;
-  showOptions();
+  showOptions(currentQuestion);
+}
+
+function showNextQuestion() {
+  clearInterval(timerInterval);
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  }
+  currentQuestionIndex++;
 }
 
 function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
-  showQuestion();
+  showNextQuestion();
 }
 
 startQuiz();
